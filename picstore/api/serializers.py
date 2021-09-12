@@ -15,7 +15,8 @@ class UploadedImageSerializer(serializers.ModelSerializer):
                 instance.file.width, instance.file.height)
         else:
             rep['size'] = str(instance.size) + 'px'
-        rep['file'] = instance.file.path
+        request = self.context.get("request")
+        rep['file'] = request.build_absolute_uri(instance.file.url)
         return rep
 
     class Meta:

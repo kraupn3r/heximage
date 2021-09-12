@@ -28,7 +28,8 @@ class ImageSetAPIView(generics.GenericAPIView):
         page = self.paginate_queryset(qs)
 
         if page is not None:
-            serializer = ListImageSetSerializer(page, many=True)
+            serializer = ListImageSetSerializer(page, many=True,
+                context={'request': request})
             return self.get_paginated_response(serializer.data)
 
         serializer = ListImageSetSerializer(qs, many=True)
