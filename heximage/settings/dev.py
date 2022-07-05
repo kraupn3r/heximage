@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'accounts',
     'picstore',
     'rest_framework',
-    'storages'
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -129,8 +129,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 STATIC_URL = '/static/'
