@@ -6,7 +6,7 @@
     "env": {
       "DJANGO_SETTINGS_MODULE": {
         "description": "Set Django Settings to Production",
-        "value": "backend.settings.prod"
+        "value": "heximage.settings.prod"
       }
      },
     "addons": [
