@@ -1,0 +1,15 @@
+{
+    "name": "Heximage",
+    "description": "",
+    "repository": "https://github.com/kraupn3r/heximage",
+    "keywords": ["django", "template", "django rest framework"],
+     },
+    "addons": [
+
+     ],
+     "buildpacks": [
+        {
+          "url": "heroku/python"
+        }
+    ]
+  }

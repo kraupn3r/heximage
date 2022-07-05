@@ -62,7 +62,8 @@ class ImageSet(models.Model):
                     set=self,
                     size=size,
                 )
-                filename = name + '_{}x{}_'.format(filesize[0], filesize[1]) +  \
+                filesize = (im.width, im.height)
+                filename = name + f'_{filesize[0]}x{filesize[1]}_' +  \
                     ''.join(random.choices(charchoices, k=10))
                 imagefilename = filename + ext
                 image.file.save(imagefilename, ContentFile(
@@ -95,9 +96,6 @@ class UploadedImage(models.Model):
         verbose_name_plural = "User Images"
         ordering = ['id']
 
-# Needed to delete model instances as well as actual files
-
-
 @receiver(pre_delete, sender=UploadedImage)
 def delete_image_hook(sender, instance, using, **kwargs):
     instance.file.delete()
@@ -117,3 +115,6 @@ class TimedImageLink(models.Model):
     class Meta:
         verbose_name_plural = "Time Restricted Links"
         ordering = ['-id']
+        indexes = [
+            models.Index(fields=['-id',]),
+]

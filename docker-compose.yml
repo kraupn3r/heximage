@@ -1,0 +1,31 @@
+version: '3.3'
+
+services:
+  db:
+    image: postgres
+    container_name: heximage-db
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: db
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+  django:
+    build:
+      context: .
+      dockerfile: docker/BackendDockerfile
+    container_name: heximage-backend
+    command: ./docker/backend_setup.sh
+    environment:
+      SECRET_KEY: z-+$tyr)mif-dsjx)vd#pkay86u_((ut^8(_0)283#bus5k&he
+      POSTGRES_NAME: postgres
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+      POSTGRES_HOST: db
+    volumes:
+      - .:/app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db

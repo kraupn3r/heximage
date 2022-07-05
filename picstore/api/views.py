@@ -1,6 +1,7 @@
 import json
+
 from django.urls import reverse
-from django.http import HttpResponse, HttpResponseForbidden
+from django.http import HttpResponse, HttpResponseForbidden, StreamingHttpResponse
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import generics, permissions, status
@@ -11,7 +12,10 @@ from picstore.api.serializers import UploadedImageSerializer, \
     ListImageSetSerializer, UploadImageSetSerializer, RestrictedImageSerializer
 from accounts.models import UserProfile
 from django.utils import timezone
-
+from wsgiref.util import FileWrapper
+from io import StringIO
+import requests
+from PIL import Image
 
 class ImageSetAPIView(generics.GenericAPIView):
     parser_classes = (MultiPartParser, )
@@ -66,19 +70,30 @@ class CreateLinkAPIView(APIView):
         return Response(serializer.errors,
                         status=status.HTTP_400_BAD_REQUEST)
 
-# Seems like the only way to restrict access to a file in pure django,
-# could also create new file withing the view, load it, then delete and serve
+
+
+def url2yield(url, chunksize=1024):
+   s = requests.Session()
+   response = s.get(url, stream=True)
+
+   chunk = True
+   while chunk :
+      chunk = response.raw.read(chunksize)
+
+      if not chunk:
+         break
+
+      yield chunk
+
+
+
 def RestrictedTimeView(request, uuid):
-    # open file
+
     link_obj = TimedImageLink.objects.get(id=uuid)
-    filepath = link_obj.image.file.path
-
-# image is loaded to memory and then passed to end user, not showing the source
-    with open(filepath, "rb") as fid:
-        filedata = fid.read()
-
     if link_obj.expire_by_date > timezone.now():
-        response = HttpResponse(filedata, content_type="image/jpeg")
+        filepath = link_obj.image.file.url
+        response = StreamingHttpResponse(url2yield('http://localhost:8080'+filepath), content_type="image/jpeg")
+
     else:
         response = HttpResponseForbidden(
             "403 Forbidden , you don't have access")
