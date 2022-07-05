@@ -1,7 +1,11 @@
 # Heximage Project
 This project is a technical skill test for a recrutation campaign.
 
-Requirements:
+
+
+
+
+## Requirements:
 
 ```
 asgiref==3.4.1
@@ -11,10 +15,27 @@ Pillow==8.3.2
 pytz==2021.1
 sqlparse==0.4.2
 typing-extensions==3.10.0.2
+django-environ>=0.4.5
+gunicorn>=19.9.0
+psycopg2-binary>=2.8
+whitenoise>=4.0
+requests>=2.28.1
+
 ```
 
-Setup Django project :
+# Setup:
+## Docker-Compose
+```
+git clone https://github.com/kraupn3r/heximage
 
+cd heximage
+
+docker-compose up --build
+```
+
+
+
+## No Docker
 ```
 git clone https://github.com/kraupn3r/heximage
 
