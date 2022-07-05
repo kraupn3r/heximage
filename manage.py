@@ -6,7 +6,11 @@ import sys
 
 def main():
     """Run administrative tasks."""
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'heximage.settings.dev')
+    if os.getenv("ENV") == "Heroku":
+        print('prodsettings enabled')
+        os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'heximage.settings.prod')
+    else:
+        os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'heximage.settings.dev')
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
