@@ -92,7 +92,7 @@ def RestrictedTimeView(request, uuid):
     link_obj = TimedImageLink.objects.get(id=uuid)
     if link_obj.expire_by_date > timezone.now():
         filepath = link_obj.image.file.url
-        response = StreamingHttpResponse(url2yield('http://localhost:8080'+filepath), content_type="image/jpeg")
+        response = StreamingHttpResponse(url2yield(filepath), content_type="image/jpeg")
 
     else:
         response = HttpResponseForbidden(

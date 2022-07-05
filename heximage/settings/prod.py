@@ -12,7 +12,7 @@ from storages.backends.s3boto3 import S3Boto3Storage
 # SECURITY #
 ############
 
-DEBUG = True # bool(os.getenv('DJANGO_DEBUG', ''))
+DEBUG = False # bool(os.getenv('DJANGO_DEBUG', ''))
 
 ALLOWED_HOSTS = ['*']
 AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
