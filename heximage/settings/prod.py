@@ -6,15 +6,6 @@ from .dev import *
 
 from storages.backends.s3boto3 import S3Boto3Storage
 
-############
-# DATABASE #
-############
-# DATABASES = {
-#     'default': dj_database_url.config(
-#         default=os.getenv('DATABASE_URL')
-#     )
-# }
-
 
 
 ############
@@ -37,3 +28,4 @@ AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),)
 STATIC_ROOT = 'staticfiles'
+AWS_S3_REGION_NAME = env('AWS_REGION')
