@@ -6,4 +6,4 @@ yes | python manage.py initplans
 # yes | python manage.py dumpdata -e contenttypes -e auth.Permission --indent 4 > dumpo.json
 
 
-python manage.py runserver 0.0.0.0:8080
+python manage.py runserver 0.0.0.0:8080 --settings=backend.settings.dev

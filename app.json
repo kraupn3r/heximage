@@ -3,6 +3,11 @@
     "description": "",
     "repository": "https://github.com/kraupn3r/heximage",
     "keywords": ["django", "template", "django rest framework"],
+    "env": {
+      "DJANGO_SETTINGS_MODULE": {
+        "description": "Set Django Settings to Production",
+        "value": "backend.settings.prod"
+      }
      },
     "addons": [
 
