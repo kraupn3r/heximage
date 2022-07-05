@@ -25,9 +25,6 @@ STATICFILES_DIRS = [
 
 
 
-AWS_S3_OBJECT_PARAMETERS = {
-    'CacheControl': 'max-age=86400',
-}
 
 
 
@@ -43,7 +40,6 @@ ALLOWED_HOSTS = ['*']
 AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
 AWS_LOCATION = 'static'
-# Depending on the AWS account used, you might also need to declare AWS_SESSION_TOKEN as an environment variable
 DEFAULT_FILE_STORAGE = 'mysite.storage_backends.MediaStorage'
 AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
