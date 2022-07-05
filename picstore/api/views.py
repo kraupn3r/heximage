@@ -1,5 +1,5 @@
 import json
-
+import os
 from django.urls import reverse
 from django.http import HttpResponse, HttpResponseForbidden, StreamingHttpResponse
 from rest_framework.views import APIView
@@ -12,10 +12,7 @@ from picstore.api.serializers import UploadedImageSerializer, \
     ListImageSetSerializer, UploadImageSetSerializer, RestrictedImageSerializer
 from accounts.models import UserProfile
 from django.utils import timezone
-from wsgiref.util import FileWrapper
-from io import StringIO
-import requests
-from PIL import Image
+from .utils import url2yield
 
 class ImageSetAPIView(generics.GenericAPIView):
     parser_classes = (MultiPartParser, )
@@ -72,19 +69,6 @@ class CreateLinkAPIView(APIView):
 
 
 
-def url2yield(url, chunksize=1024):
-   s = requests.Session()
-   response = s.get(url, stream=True)
-
-   chunk = True
-   while chunk :
-      chunk = response.raw.read(chunksize)
-
-      if not chunk:
-         break
-
-      yield chunk
-
 
 
 def RestrictedTimeView(request, uuid):
@@ -92,7 +76,11 @@ def RestrictedTimeView(request, uuid):
     link_obj = TimedImageLink.objects.get(id=uuid)
     if link_obj.expire_by_date > timezone.now():
         filepath = link_obj.image.file.url
-        response = StreamingHttpResponse(url2yield(filepath), content_type="image/jpeg")
+        if os.getenv("ENV") == "Heroku":
+            url = filepath
+        else:
+            url = 'http://localhost:8080' + filepath
+        response = StreamingHttpResponse(url2yield(url), content_type="image/jpeg")
 
     else:
         response = HttpResponseForbidden(
