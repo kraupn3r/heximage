@@ -1,9 +1,10 @@
 # Heximage Project
 This project is a technical skill test for a recrutation campaign.
 
+## Preview
+Live preview accesible at https://recruitement-heximage.herokuapp.com
 
-
-
+# Setup:
 
 ## Requirements:
 
@@ -18,12 +19,15 @@ typing-extensions==3.10.0.2
 django-environ>=0.4.5
 gunicorn>=19.9.0
 psycopg2-binary>=2.8
-whitenoise>=4.0
 requests>=2.28.1
+django-storages>=1.12.3
+boto3>=1.6.4
+botocore>=1.9.4
+
 
 ```
 
-# Setup:
+
 ## Docker-Compose
 ```
 git clone https://github.com/kraupn3r/heximage
